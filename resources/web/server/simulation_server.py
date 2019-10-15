@@ -172,7 +172,7 @@ class Client:
     def cleanup_webots_instance(self):
         """Cleanup the local Webots project not used any more by the client."""
         if self.project_instance_path:
-            shutil.rmtree(self.project_instance_path)
+            shutil.rmtree(self.project_instance_path, ignore_errors=True)
 
     def start_webots(self, on_webots_quit):
         """Start a Webots instance in a separate thread."""
@@ -180,7 +180,8 @@ class Client:
             global config
             world = self.project_instance_path + '/worlds/' + self.world
             port = client.streaming_server_port
-            command = config['webots'] + ' --batch --mode=pause --minimize '
+            # command = 'Xvfb :99 -screen 0 1024x768x16; '
+            command = config['webots'] + ' --batch --mode=pause --minimize --no-sandbox --stdout --stderr '
             command += '--stream="port=' + str(port) + ';monitorActivity'
             if self.user1Authentication or not self.user1Id:  # we are running our own or an anonymous simulation
                 command += ';controllerEdit'
@@ -707,7 +708,7 @@ if sys.platform == 'linux2':
     os.system("killall -q webots-bin")
 
 # specify the display to ensure Webots can be executed even if this script is started remotely from a ssh session
-os.environ["DISPLAY"] = ":0"
+# os.environ["DISPLAY"] = ":0"
 # ensure we are in the script directory
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 argc = len(sys.argv)
