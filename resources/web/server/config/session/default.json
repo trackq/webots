@@ -1,6 +1,7 @@
 {
   "port": 1999,
   "server": "localhost",
+  "projectsDir": "/root/webots/projects",
   "simulationServers": [
     "localhost:2000"
   ]

@@ -1,3 +1,4 @@
 {
+  "projectsDir": "/root/webots/projects",
   "keyDir": "$WEBOTS_HOME/../resources/web/server/key"
 }
